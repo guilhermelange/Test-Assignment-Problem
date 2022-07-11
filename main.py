@@ -1,4 +1,5 @@
 import sys
+import random
 
 file_name = sys.argv[1]
 timeout = sys.argv[2]
@@ -8,6 +9,17 @@ def create_matriz(size, default_value):
     for i in range(size):
         matriz[i] = [default_value for _ in range(size)]
     return matriz
+
+def create_array(size, selected_count, shuffle):
+    print('selected_count: ', selected_count)
+    selected = [1 if i < selected_count else 0 for i in range(size)]
+
+    random.randint()
+    if shuffle:
+        random.shuffle(selected)
+    
+    return selected
+    
 
 def read_instance(file_name):
     # Open File
@@ -26,7 +38,9 @@ def read_instance(file_name):
     tests = [str(i) for i in range(0, test_count)]
     desk_distance = create_matriz(desk_count, 0)
     tests_similarity = create_matriz(test_count, 0)
-    selected = create_matriz(test_count, 0)
+
+    print('desk_empty_count: ', desk_empty_count)
+    selected = create_array(desk_count, (desk_count - desk_empty_count), True)
 
     # Read
     for _ in range(0, desk_count):
@@ -43,6 +57,9 @@ def read_instance(file_name):
         line = line.split('  ')
         x, y, similarity = int(line[0]), int(line[1]), float(line[2])
         tests_similarity[x][y] = similarity
+
+    
+
 
     print('End instance reading')
     return desk_distance, tests_similarity, selected, desks, tests, desk_empty_count
