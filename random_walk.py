@@ -33,7 +33,6 @@ def correct_solution(current_solution):
 response_solution = viable_solution(desk_count, desk_count, test_count)
 objetive = objetive_function(distance, similarity, response_solution)
 
-count = 0
 while execution_time < timeout:
     current_solution = random_walk(response_solution)
     solution = objetive_function(distance, similarity, current_solution)
@@ -42,7 +41,6 @@ while execution_time < timeout:
         response_solution = current_solution
         objetive = solution
 
-    count += 1
     current_time = time.time()
     execution_time = current_time - initial_time
 
