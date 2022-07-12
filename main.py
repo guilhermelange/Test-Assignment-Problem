@@ -10,16 +10,29 @@ def create_matriz(size, default_value):
         matriz[i] = [default_value for _ in range(size)]
     return matriz
 
-def create_array(size, selected_count, shuffle):
-    print('selected_count: ', selected_count)
-    selected = [1 if i < selected_count else 0 for i in range(size)]
-
-    random.randint()
-    if shuffle:
-        random.shuffle(selected)
-    
+def viable_solution(size, selected_count, test_count):
+    selected = [random.randint(1, test_count-1) if i < selected_count else 0 for i in range(size)]
+    random.shuffle(selected)
     return selected
-    
+
+
+def objetive_function(distance, similarity, solution):
+    size = len(distance)
+    objective_sum = 0.0
+    for d in range(size):
+        for e in range(d, size):
+            if distance[d][e] > 0:
+                test1 = solution[d]
+                test2 = solution[e]
+                aux = 0
+                if test2 < test1:
+                    aux = test1
+                    test1 = test2
+                    test2 = aux
+
+                print(d, e, ' - ', test1, test2, ' - ', distance[d][e], similarity[test1][test2])
+                objective_sum += distance[d][e] * similarity[test1][test2]
+    return objective_sum
 
 def read_instance(file_name):
     # Open File
@@ -39,9 +52,6 @@ def read_instance(file_name):
     desk_distance = create_matriz(desk_count, 0)
     tests_similarity = create_matriz(test_count, 0)
 
-    print('desk_empty_count: ', desk_empty_count)
-    selected = create_array(desk_count, (desk_count - desk_empty_count), True)
-
     # Read
     for _ in range(0, desk_count):
         desks.append(int(next(lines)))
@@ -58,23 +68,6 @@ def read_instance(file_name):
         x, y, similarity = int(line[0]), int(line[1]), float(line[2])
         tests_similarity[x][y] = similarity
 
-    
-
 
     print('End instance reading')
-    return desk_distance, tests_similarity, selected, desks, tests, desk_empty_count
-
-
-desk_distance, tests_similarity, selected, desks, tests, desk_empty_count = read_instance(file_name)
-
-print(desk_distance)
-print('desk_distance')
-print(tests_similarity)
-print('tests_similarity')
-print(selected)
-print('selected')
-# objective_sum = 0.0
-# for i in range(len(desk_distance)):
-#     for j in range(i, len(desk_distance[i])):
-#         if desk_distance[i][j] > 0:
-#             objective_sum += desk_distance[i][j]
+    return desk_distance, tests_similarity, desks, tests, desk_empty_count
