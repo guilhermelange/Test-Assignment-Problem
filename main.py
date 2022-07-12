@@ -1,8 +1,4 @@
-import sys
 import random
-
-file_name = sys.argv[1]
-timeout = sys.argv[2]
 
 def create_matriz(size, default_value):
     matriz = [[] for _ in range(size)]
