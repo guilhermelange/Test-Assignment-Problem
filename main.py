@@ -29,8 +29,7 @@ def objetive_function(distance, similarity, solution):
                     aux = test1
                     test1 = test2
                     test2 = aux
-
-                print(d, e, ' - ', test1, test2, ' - ', distance[d][e], similarity[test1][test2])
+                    
                 objective_sum += distance[d][e] * similarity[test1][test2]
     return objective_sum
 
