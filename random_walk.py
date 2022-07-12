@@ -43,10 +43,6 @@ while execution_time < timeout:
         objetive = solution
 
     count += 1
-
-    if count > 4:
-        break
-        
     current_time = time.time()
     execution_time = current_time - initial_time
 
