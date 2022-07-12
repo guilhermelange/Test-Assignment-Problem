@@ -14,7 +14,7 @@ desk_with_test = 0
 
 def validade_best(solution, idx):
     iteration_value = 100000
-    iteration_solution = solution
+    iteration_solution = solution.copy()
 
     for i in range(1, test_count):
         solution[idx] = i
