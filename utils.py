@@ -11,6 +11,19 @@ def viable_solution(size, selected_count, test_count):
     random.shuffle(selected)
     return selected
 
+def correct_solution(current_solution, desk_count, empty):
+        for i in random.sample(range(desk_count), empty):
+            current_solution[i] = 0
+        return current_solution
+
+def correct_solution_v2(current_solution, desk_count, test_count, empty):
+    for i in range(len(current_solution)):
+        if current_solution[i] == 0:
+            current_solution[i] = random.randint(1, test_count-1)
+
+    for i in random.sample(range(desk_count), empty):
+        current_solution[i] = 0
+    return current_solution
 
 def objetive_function(distance, similarity, solution):
     size = len(distance)
