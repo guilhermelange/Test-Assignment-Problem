@@ -1,4 +1,5 @@
 import random
+import re
 
 def create_matriz(size, default_value):
     matriz = [[] for _ in range(size)]
@@ -49,12 +50,14 @@ def read_instance(file_name):
     lines = file.readlines()
     lines = map(lambda l: l.rstrip('\n'), lines)
     fields = next(lines).split('\t')
+    fields[2] = re.sub(r"\s+", " ", fields[2])
+    
     
     # Header
     desk_count = int(fields[0])
     desk_empty_count = int(fields[3])
-    edge_count = int(fields[2].split('  ')[0])
-    test_count = int(fields[2].split('  ')[1])
+    edge_count = int(fields[2].split(' ')[0])
+    test_count = int(fields[2].split(' ')[1])
     desks = []
     tests = [str(i) for i in range(0, test_count)]
     desk_distance = create_matriz(desk_count, 0)
@@ -72,7 +75,8 @@ def read_instance(file_name):
         desk_distance[x_index][y_index] = distance
 
     for line in lines:
-        line = line.split('  ')
+        line = re.sub(r"\s+", " ", line)
+        line = line.split(' ')
         x, y, similarity = int(line[0]), int(line[1]), float(line[2])
         tests_similarity[x][y] = similarity
 
