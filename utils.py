@@ -27,6 +27,26 @@ def correct_solution_v2(current_solution, desk_count, test_count, empty):
         current_solution[i] = 0
     return current_solution
 
+def generate_random_neighbor(solution):
+    tests = config.tests
+    test_count = len(tests)
+
+    list_desks = range(len(solution))
+    i = random.choice(list_desks)
+    opt = solution[i]
+
+    tests_numbers = list(range(1, test_count))
+    if opt > 0: tests_numbers.remove(opt) 
+    solution[i] = random.choice(tests_numbers)
+
+    if opt <= 0:
+        options = [j for j in range(len(solution)) if solution[j] > 0]
+        i = random.choice(options)
+        solution[i] = 0
+
+    return solution
+
+
 def objetive_function(solution):
     distance = config.distance
     similarity = config.similarity

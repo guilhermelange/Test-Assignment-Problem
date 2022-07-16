@@ -8,14 +8,17 @@ import config
 def first_improvement(viable_solution):
     tests = config.tests
     current_solution = viable_solution
+    final_objetive = objetive_function(viable_solution)
+
     for desk in current_solution:
         alt_soluction = current_solution
         for test in tests:
             if(int(test) != current_solution[desk] and int(test) != 0):
                 alt_soluction[desk] = int(test)      
             alt_objetive = objetive_function(alt_soluction)
-            if(alt_objetive > objetive):
+            if(alt_objetive > final_objetive):
                 return alt_soluction, alt_objetive
+    print('saiu sem return')
 
 # Busca Local Simples Melhor Melhora
 # Simple Local Search best improvement
