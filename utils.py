@@ -1,5 +1,6 @@
 import random
 import re
+import config
 
 def create_matriz(size, default_value):
     matriz = [[] for _ in range(size)]
@@ -26,8 +27,11 @@ def correct_solution_v2(current_solution, desk_count, test_count, empty):
         current_solution[i] = 0
     return current_solution
 
-def objetive_function(distance, similarity, solution):
+def objetive_function(solution):
+    distance = config.distance
+    similarity = config.similarity
     size = len(distance)
+
     objective_sum = 0.0
     for d in range(size):
         for e in range(d, size):
@@ -51,7 +55,6 @@ def read_instance(file_name):
     lines = map(lambda l: l.rstrip('\n'), lines)
     fields = next(lines).split('\t')
     fields[2] = re.sub(r"\s+", " ", fields[2])
-    
     
     # Header
     desk_count = int(fields[0])
@@ -82,4 +85,5 @@ def read_instance(file_name):
 
 
     print('End instance reading')
+    config.update_instance(desk_distance, tests_similarity, desks, tests, desk_empty_count)
     return desk_distance, tests_similarity, desks, tests, desk_empty_count
