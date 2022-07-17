@@ -18,7 +18,7 @@ def first_improvement(viable_solution):
             alt_objetive = objetive_function(alt_soluction)
             if(alt_objetive > final_objetive):
                 return alt_soluction, alt_objetive
-    print('saiu sem return')
+    return current_solution, final_objetive
 
 # Busca Local Simples Melhor Melhora
 # Simple Local Search best improvement

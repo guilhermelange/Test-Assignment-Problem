@@ -16,20 +16,20 @@ from utils import generate_random_neighbor, viable_solution, read_instance
 
 
 
-M = []
+# M = []
 
-s = [1,2,3,4]
-M.append(s)
+# s = [1,2,3,4]
+# M.append(s)
 
-s1 = [4,456,7]
-M.append(s1)
+# s1 = [4,456,7]
+# M.append(s1)
 
-s2 = [4]
-M.append(s2)
+# s2 = [4]
+# M.append(s2)
 
-if (not(s in  M)):
-    print('s')
+# if (not(s in  M)):
+#     print('s')
 
-M = M[1:]
+# M = M[1:]
 
-print(M)
+# print(M)
