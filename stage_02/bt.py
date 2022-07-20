@@ -29,6 +29,11 @@ def bt(s0, d):
     s_ = s
     value_ = objetive_function(s_)
 
+    # mais importante:
+    # guardar no array o numer ao invés da solução inteira.
+    # aceitar caso haja uma melhora no teste
+    # ao gera melhor vizinho, já considerar a tabu
+
     while execution_time < timeout:
         s_current, _ = best_improvement(s)
 

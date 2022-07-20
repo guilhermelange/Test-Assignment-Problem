@@ -33,3 +33,10 @@ from utils import generate_random_neighbor, viable_solution, read_instance
 # M = M[1:]
 
 # print(M)
+
+
+def carai(teste, valor = 0):
+    print(teste)
+    print(valor)
+
+carai(1)

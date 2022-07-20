@@ -5,8 +5,9 @@ import time
 from semi_greedy import semi_greedy
 sys.path.insert(1, '../')
 sys.path.insert(1, '../stage_01')
-from bls import best_improvement
-from utils import objetive_function, read_instance
+import config
+from local_search import local_search
+from utils import corrent_solution_size, objetive_function, read_instance
 
 def GRASP(alpha, timeout):
     s_ = []
@@ -18,7 +19,7 @@ def GRASP(alpha, timeout):
 
     while execution_time < timeout:
         s, _ = semi_greedy(alpha) # Guloso Randomizado
-        s, _ = best_improvement(s)
+        s, _ = local_search(s, 1) # Melhor melhora
 
         value = objetive_function(s)
         if value <= value_:
@@ -27,6 +28,8 @@ def GRASP(alpha, timeout):
 
         current_time = time.time()
         execution_time = current_time - initial_time
+
+    s_, value_ = corrent_solution_size(s_, config.empty)
 
     return s_, value_
 

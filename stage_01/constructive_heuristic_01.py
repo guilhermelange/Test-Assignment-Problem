@@ -1,13 +1,14 @@
 import random
 import sys
 sys.path.insert(1, '../')
-from utils import read_instance, objetive_function
+from utils import read_instance, objetive_function, corrent_solution_size
 import config
 
 # Heurística Construtiva 01
 # Constructive Heuristic 01
+# Ramdom para selecionar a carteira que será alterada, e calculado a melhor mesa
 def constructive_heuristic_01():
-    def validade_best(solution, idx):
+    def validade_best_test(solution, idx):
         iteration_value = 100000
         iteration_solution = solution.copy()
 
@@ -26,12 +27,13 @@ def constructive_heuristic_01():
     best_value = 0
     desk_with_test = 0
 
-    while desk_with_test < (desk_count - empty):
+    while desk_with_test < (desk_count):
         sort_list = [i for i in range(desk_count) if s[i] == 0]
         idx = random.choice(sort_list)
-        s, best_value = validade_best(s, idx)
+        s, best_value = validade_best_test(s, idx)
         desk_with_test += 1
 
+    s, best_value = corrent_solution_size(s, empty)
     return s, best_value
 
 

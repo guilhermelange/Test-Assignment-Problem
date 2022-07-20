@@ -5,11 +5,11 @@ import time
 import random
 sys.path.insert(1, '../')
 sys.path.insert(1, '../stage_01/')
-from utils import read_instance, objetive_function, generate_random_neighbor, viable_solution
-from bls import best_improvement
+from utils import corrent_solution_size, read_instance, objetive_function, generate_random_neighbor, viable_solution
+from local_search import best_improvement
 import config
 
-def blr(s0, p):
+def randomized_local_search(s0, p):
     initial_time = time.time()
     current_time = time.time()
     execution_time = current_time - initial_time
@@ -23,7 +23,9 @@ def blr(s0, p):
         if r <= p:
             s = generate_random_neighbor(s)
         else:
-            s = best_improvement(s)
+            s, value_strategy = best_improvement(s) # se não apresentar melhora chamar a vizinha
+            if value_strategy >= value_:
+                s = generate_random_neighbor(s)
 
         value = objetive_function(s)
 
@@ -34,6 +36,8 @@ def blr(s0, p):
         current_time = time.time()
         execution_time = current_time - initial_time
 
+    s_, value_ = corrent_solution_size(s_, config.empty)
+
     return s_, value_
 
 if __name__ == '__main__':
@@ -43,7 +47,7 @@ if __name__ == '__main__':
     config.set_timeout(timeout)
     _, _, desks, tests, desk_empty_count = read_instance(file_name)
 
-    initial = viable_solution(len(desks), len(desks) - desk_empty_count, len(tests))
-    s_, value_ = blr(initial, p)
+    initial = viable_solution(len(desks), len(desks), len(tests))
+    s_, value_ = randomized_local_search(initial, p)
     print(s_)
     print(value_)

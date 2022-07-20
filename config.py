@@ -11,6 +11,10 @@ def set_timeout(a):
     global timeout
     timeout = a
 
+def set_strategy(a):
+    global strategy
+    strategy = a
+
 
 def get_values():
     return distance, similarity, desks, tests, empty, timeout
