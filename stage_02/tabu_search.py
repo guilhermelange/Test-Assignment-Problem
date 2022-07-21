@@ -4,44 +4,43 @@ import sys
 import time
 sys.path.insert(1, '../')
 sys.path.insert(1, '../stage_01')
-from bls import best_improvement
-from utils import objetive_function, read_instance, viable_solution
+import config
+from utils import corrent_solution_size, objetive_function, read_instance, viable_solution
+from local_search import best_improvement
 
-def bt(s0, d):
-    def aceita(solution, M):
-        if solution in M:
-            return False
-        else:
-            return True
-
-    def atualiza_memoria(M, d, solution): 
-        if len(M) >= d:
-            M = M[1:]
-        M.append(solution)
-        return M
-
+def tabu_search(s0, d):
     initial_time = time.time()
     current_time = time.time()
     execution_time = current_time - initial_time
 
-    M = []
+    empty = config.empty
+    desk_count = len(config.desks)
+    M = [0 for i in range(desk_count)]
     s = s0
     s_ = s
     value_ = objetive_function(s_)
+    value = value_
+    last_index_tabu = 0
 
     # mais importante:
     # guardar no array o numer ao invés da solução inteira.
     # aceitar caso haja uma melhora no teste
     # ao gera melhor vizinho, já considerar a tabu
 
+    count = 0
     while execution_time < timeout:
-        s_current, _ = best_improvement(s)
-
-        if aceita(s_current, M):
-            s = s_current
+        count += 1
+        s_current, _, index_tabu = best_improvement(s, M, value_, count, d) # Aceita está contido na geração da vizinhança
+        s = s_current
         
-        M = atualiza_memoria(M, d, s_current)
+        if index_tabu < 0: # Nao localizada index pra mudar
+            M = [0 for i in range(desk_count)] # reinicia lista tabu
+            index_tabu = last_index_tabu
+        else:
+            last_index_tabu = index_tabu
 
+        M[index_tabu] = count # atualiza memória
+        
         value = objetive_function(s)
         if value < value_:
             s_ = s
@@ -49,6 +48,9 @@ def bt(s0, d):
 
         current_time = time.time()
         execution_time = current_time - initial_time
+        
+
+    corrent_solution_size(s_, empty)
     return s_, value_
 
 
@@ -59,6 +61,6 @@ if __name__ == '__main__':
     _, _, desks, tests, desk_empty_count = read_instance(file_name)
 
     initial = viable_solution(len(desks), len(desks) - desk_empty_count, len(tests))
-    s_, value_ = bt(initial, memory_size)
+    s_, value_ = tabu_search(initial, memory_size)
     print(s_)
     print(value_)

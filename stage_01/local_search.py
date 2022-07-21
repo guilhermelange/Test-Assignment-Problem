@@ -3,12 +3,24 @@ sys.path.insert(1, '../')
 from utils import corrent_solution_size, objetive_function, read_instance, viable_solution
 import config
 
+def validate_tabu(index, value, current_best, tabu, tabu_duration, iteration):
+    tabu_interation = tabu[index]
+
+    print(tabu, index)
+    if (value < current_best) or (tabu_interation == 0) or ((iteration - tabu_interation) > tabu_duration):
+        return True
+    else:
+        return False
+
+
 # Primeira Melhora
 # first improvement
-def first_improvement(viable_solution):
+def first_improvement(viable_solution, tabu = [], current_best = 0, iteration = 0, tabu_duration = 0):
     tests = config.tests
     final_soluction = viable_solution.copy()
     final_objetive = objetive_function(viable_solution)
+    tabu_size = len(tabu)
+    tabu_change = -1
 
     for desk in range(0, len(viable_solution)):
         for test in range(1, len(tests)):
@@ -17,16 +29,28 @@ def first_improvement(viable_solution):
                 alt_soluction[desk] = test
                 alt_objetive = objetive_function(alt_soluction)
                 if(alt_objetive < final_objetive):
-                    return alt_soluction, alt_objetive
+                    check = True
+                    if tabu_size > 0:
+                        check = validate_tabu(desk, alt_objetive, current_best, tabu, tabu_duration, iteration)
 
-    return final_soluction, final_objetive
+                    if check:
+                        tabu_change = desk
+                        current_best = alt_objetive
+                        return alt_soluction, alt_objetive
+
+    if tabu_size > 0:
+        return final_soluction, final_objetive, tabu_change
+    else:
+        return final_soluction, final_objetive
 
 # Melhor Melhora
 # best improvement
-def best_improvement(viable_solution):
+def best_improvement(viable_solution, tabu = [], current_best = 0, iteration = 0, tabu_duration = 0):
     tests = config.tests
     final_soluction = viable_solution.copy()
     final_objetive = objetive_function(viable_solution)
+    tabu_size = len(tabu)
+    tabu_change = -1
     
     for desk in range(0, len(viable_solution)):
         for test in range(1, len(tests)):
@@ -35,10 +59,20 @@ def best_improvement(viable_solution):
                 alt_soluction[desk] = test
                 alt_objetive = objetive_function(alt_soluction)
                 if(alt_objetive < final_objetive):
-                    final_soluction = alt_soluction
-                    final_objetive = alt_objetive
+                    check = True
+                    if tabu_size > 0:
+                        check = validate_tabu(desk, alt_objetive, current_best, tabu, tabu_duration, iteration)
+                    
+                    if check:
+                        tabu_change = desk
+                        current_best = alt_objetive
+                        final_soluction = alt_soluction
+                        final_objetive = alt_objetive
 
-    return final_soluction, final_objetive
+    if tabu_size > 0:
+        return final_soluction, final_objetive, tabu_change
+    else:
+        return final_soluction, final_objetive
 
 switcher = {
     0: first_improvement,

@@ -8,11 +8,13 @@ import config
 
 # Algoritmo semi-guloso e amostragem gulosa conforme http://mauricio.resende.info/doc/sgrasp-pt.pdf e ... 
 # https://digitalis-dsp.uc.pt/bitstream/10316.2/30057/3/10-Manual%20de%20Computa%C3%A7%C3%A3o%20Evolutiva%20e%20Metaheur%C3%ADstica%20%282012%29.pdf
-def semi_greedy(alpha):
+def semi_greedy(alpha, correct_size):
     desks, tests, empty = config.desks, config.tests, config.empty
     desks_count = len(desks)
     tests_count = len(tests)
-    desks_with_tests = desks_count - empty
+    desks_with_tests = desks_count
+    if correct_size == 1:
+        desks_with_tests -= empty
     
     s_ = [0 for i in range(desks_count)] # Solucao
     C = [i for i in range(1, tests_count)] # Possibilidades
@@ -68,6 +70,6 @@ if __name__ == '__main__':
     alpha = sys.argv[2]
     read_instance(file_name)
 
-    s_, value_ = semi_greedy(alpha)
+    s_, value_ = semi_greedy(alpha, 0)
     print(s_)
     print(value_)

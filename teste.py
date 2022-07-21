@@ -35,8 +35,15 @@ from utils import generate_random_neighbor, viable_solution, read_instance
 # print(M)
 
 
-def carai(teste, valor = 0):
-    print(teste)
-    print(valor)
+# def carai(teste, valor = 0):
+#     print(teste)
+#     print(valor)
 
-carai(1)
+# carai(1)
+
+teste = 2
+aux = teste
+
+aux = 3
+
+print(teste, aux)

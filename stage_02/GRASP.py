@@ -18,7 +18,7 @@ def GRASP(alpha, timeout):
     execution_time = current_time - initial_time
 
     while execution_time < timeout:
-        s, _ = semi_greedy(alpha) # Guloso Randomizado
+        s, _ = semi_greedy(alpha, 0) # Guloso Randomizado
         s, _ = local_search(s, 1) # Melhor melhora
 
         value = objetive_function(s)
