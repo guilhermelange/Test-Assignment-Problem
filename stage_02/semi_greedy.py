@@ -13,7 +13,7 @@ def semi_greedy(alpha, correct_size):
     desks_count = len(desks)
     tests_count = len(tests)
     desks_with_tests = desks_count
-    if correct_size == 1:
+    if correct_size:
         desks_with_tests -= empty
     
     s_ = [0 for i in range(desks_count)] # Solucao

@@ -6,8 +6,9 @@ sys.path.insert(1, '../')
 sys.path.insert(1, '../stage_01')
 import config
 from utils import corrent_solution_size, objetive_function, read_instance, viable_solution
-from local_search import best_improvement
+from local_search import first_improvement
 
+# Busca Tabu + primeira melhora
 def tabu_search(s0, d):
     initial_time = time.time()
     current_time = time.time()
@@ -30,7 +31,7 @@ def tabu_search(s0, d):
     count = 0
     while execution_time < timeout:
         count += 1
-        s_current, _, index_tabu = best_improvement(s, M, value_, count, d) # Aceita está contido na geração da vizinhança
+        s_current, _, index_tabu = first_improvement(s, M, value_, count, d) # Aceita está contido na geração da vizinhança
         s = s_current
         
         if index_tabu < 0: # Nao localizada index pra mudar

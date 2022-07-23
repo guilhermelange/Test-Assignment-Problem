@@ -5,10 +5,11 @@ import time
 import random
 sys.path.insert(1, '../')
 sys.path.insert(1, '../stage_01/')
-from utils import corrent_solution_size, read_instance, objetive_function, generate_random_neighbor, viable_solution
+from utils import corrent_solution_size, random_neighbor, read_instance, objetive_function, generate_random_neighbor, viable_solution
 from local_search import best_improvement
 import config
 
+# Randomized Local Search + best_improvment
 def randomized_local_search(s0, p):
     initial_time = time.time()
     current_time = time.time()
@@ -21,11 +22,11 @@ def randomized_local_search(s0, p):
         r = random.randint(0, 1)
 
         if r <= p:
-            s = generate_random_neighbor(s)
+            s = random_neighbor(s)
         else:
             s, value_strategy = best_improvement(s) # se não apresentar melhora chamar a vizinha
             if value_strategy >= value_:
-                s = generate_random_neighbor(s)
+                s = random_neighbor(s)
 
         value = objetive_function(s)
 

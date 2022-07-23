@@ -1,3 +1,4 @@
+from cgi import test
 import random
 from utils import generate_random_neighbor, viable_solution, read_instance
 
@@ -41,9 +42,7 @@ from utils import generate_random_neighbor, viable_solution, read_instance
 
 # carai(1)
 
-teste = 2
-aux = teste
+teste = True
 
-aux = 3
-
-print(teste, aux)
+if teste:
+    print('valido')

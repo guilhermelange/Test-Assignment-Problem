@@ -7,7 +7,7 @@ import config
 # Heurística Construtiva 02
 # Constructive Heuristic 02
 # Random para selecionar o teste e calculado a melhor mesa para aplicá-lo
-def constructive_heuristic_02():
+def constructive_heuristic_02(corrent_size):
     def validade_best_desk(solution, idx):
         # idx = test number / index
         iteration_value = 100000
@@ -36,7 +36,9 @@ def constructive_heuristic_02():
         s, best_value = validade_best_desk(s, idx)
         desk_with_test += 1
 
-    s, best_value = corrent_solution_size(s, empty)
+    if corrent_size:
+        s, best_value = corrent_solution_size(s, empty)
+
     return s, best_value
 
 
@@ -44,7 +46,7 @@ if __name__ == '__main__':
     file_name = sys.argv[1]
     read_instance(file_name)
 
-    response_solution, objetive = constructive_heuristic_02()
+    response_solution, objetive = constructive_heuristic_02(True)
     print()
     print(response_solution)
     print(objetive)

@@ -7,8 +7,10 @@ sys.path.insert(1, '../stage_01')
 sys.path.insert(1, '../')
 from utils import corrent_solution_size, objetive_function, read_instance, viable_solution
 from local_search import local_search
+from constructive_heuristic_02 import constructive_heuristic_02
 import config
 
+# Busca local múltiplos inícios + heurística construtiva 02 + busca local melhor melhora
 def multiple_starts_local_search(timeout):
     desks, tests, empty = config.desks, config.tests, config.empty
     desk_count = len(desks)
@@ -20,7 +22,7 @@ def multiple_starts_local_search(timeout):
     current_time = time.time()
     execution_time = current_time - initial_time
     while execution_time < timeout:
-        s = viable_solution(desk_count, desk_count, test_count)
+        s, _ = constructive_heuristic_02(False)
         s, value = local_search(s, 1) # 1 = Melhor melhora
 
         if value < value_:

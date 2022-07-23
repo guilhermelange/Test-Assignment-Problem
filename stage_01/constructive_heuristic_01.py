@@ -7,7 +7,7 @@ import config
 # Heurística Construtiva 01
 # Constructive Heuristic 01
 # Ramdom para selecionar a carteira que será alterada, e calculado a melhor mesa
-def constructive_heuristic_01():
+def constructive_heuristic_01(correct_size):
     def validade_best_test(solution, idx):
         iteration_value = 100000
         iteration_solution = solution.copy()
@@ -33,7 +33,8 @@ def constructive_heuristic_01():
         s, best_value = validade_best_test(s, idx)
         desk_with_test += 1
 
-    s, best_value = corrent_solution_size(s, empty)
+    if correct_size:
+        s, best_value = corrent_solution_size(s, empty)
     return s, best_value
 
 
@@ -41,7 +42,7 @@ if __name__ == '__main__':
     file_name = sys.argv[1]
     read_instance(file_name)
 
-    response_solution, objetive = constructive_heuristic_01()
+    response_solution, objetive = constructive_heuristic_01(True)
     print()
     print(response_solution)
     print(objetive)
