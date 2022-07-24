@@ -52,7 +52,7 @@ def semi_greedy(alpha, correct_size):
         LRC = []
         for i in range(1, tests_count):
             # print(g_min,  g[i], g_max, alpha)
-            if g_min <= g[i] <= (g_min + (float(alpha) * (g_max - g_min))):
+            if g_min <= g[i] <= (g_min + (alpha * (g_max - g_min))):
                 LRC.append(i)
 
         # Sortear alpha e prosseguir
@@ -67,9 +67,9 @@ def semi_greedy(alpha, correct_size):
 
 if __name__ == '__main__':
     file_name = sys.argv[1]
-    alpha = sys.argv[2]
+    alpha = float(sys.argv[2])
     read_instance(file_name)
 
-    s_, value_ = semi_greedy(alpha, 0)
+    s_, value_ = semi_greedy(alpha, True)
     print(s_)
     print(value_)

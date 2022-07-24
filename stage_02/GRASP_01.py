@@ -20,7 +20,7 @@ def GRASP(alpha, timeout):
 
     while execution_time < timeout:
         s, _ = semi_greedy(alpha, False) # Guloso Randomizado
-        s, _ = local_search(s, 1) # Melhor melhora
+        s, _ = local_search(s, 1, False) # Melhor melhora
 
         value = objetive_function(s)
         if value <= value_:
@@ -37,7 +37,7 @@ def GRASP(alpha, timeout):
 if __name__ == '__main__':
     file_name = sys.argv[1]
     timeout = int(sys.argv[2])
-    alpha = int(sys.argv[3])
+    alpha = float(sys.argv[3])
     read_instance(file_name)
 
     s_, value_ = GRASP(alpha, timeout)

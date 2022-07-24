@@ -21,7 +21,7 @@ def GRASP(timeout):
 
     while execution_time < timeout:
         s, _ = constructive_heuristic_01(False) # Heurística Construtiva 01
-        s, _ = local_search(s, 0) # Primeira melhora
+        s, _ = local_search(s, 0, False) # Primeira melhora
 
         value = objetive_function(s)
         if value <= value_:

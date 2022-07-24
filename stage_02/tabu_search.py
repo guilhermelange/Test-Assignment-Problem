@@ -31,7 +31,8 @@ def tabu_search(s0, d):
     count = 0
     while execution_time < timeout:
         count += 1
-        s_current, _, index_tabu = first_improvement(s, M, value_, count, d) # Aceita está contido na geração da vizinhança
+        data = first_improvement(s, M, value_, count, d) # Aceita está contido na geração da vizinhança
+        s_current, _, index_tabu = data
         s = s_current
         
         if index_tabu < 0: # Nao localizada index pra mudar
@@ -51,7 +52,7 @@ def tabu_search(s0, d):
         execution_time = current_time - initial_time
         
 
-    corrent_solution_size(s_, empty)
+    s_, value_ = corrent_solution_size(s_, empty)
     return s_, value_
 
 
@@ -61,7 +62,7 @@ if __name__ == '__main__':
     memory_size = int(sys.argv[3])
     _, _, desks, tests, desk_empty_count = read_instance(file_name)
 
-    initial = viable_solution(len(desks), len(desks) - desk_empty_count, len(tests))
+    initial = viable_solution(len(desks), len(desks), len(tests))
     s_, value_ = tabu_search(initial, memory_size)
     print(s_)
     print(value_)

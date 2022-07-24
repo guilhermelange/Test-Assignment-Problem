@@ -6,7 +6,6 @@ import config
 def validate_tabu(index, value, current_best, tabu, tabu_duration, iteration):
     tabu_interation = tabu[index]
 
-    print(tabu, index)
     if (value < current_best) or (tabu_interation == 0) or ((iteration - tabu_interation) > tabu_duration):
         return True
     else:
@@ -36,7 +35,10 @@ def first_improvement(viable_solution, tabu = [], current_best = 0, iteration = 
                     if check:
                         tabu_change = desk
                         current_best = alt_objetive
-                        return alt_soluction, alt_objetive
+                        if tabu_size > 0:
+                            return alt_soluction, alt_objetive, tabu_change
+                        else:
+                            return alt_soluction, alt_objetive
 
     if tabu_size > 0:
         return final_soluction, final_objetive, tabu_change
@@ -84,7 +86,7 @@ description = {
     1: 'best_improvement'
 }
 
-def local_search(s0, strategy):
+def local_search(s0, strategy, correct_size = True):
     empty = config.empty
     s = s0
     s_value = objetive_function(s)
@@ -100,8 +102,9 @@ def local_search(s0, strategy):
             s_value = current_value
         else:
             break
-
-    s, s_value = corrent_solution_size(s, empty)
+        
+    if correct_size:
+        s, s_value = corrent_solution_size(s, empty)
     return s, s_value
 
 

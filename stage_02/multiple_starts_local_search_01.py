@@ -23,7 +23,7 @@ def multiple_starts_local_search(timeout):
     execution_time = current_time - initial_time
     while execution_time < timeout:
         s, _ = constructive_heuristic_02(False)
-        s, value = local_search(s, 1) # 1 = Melhor melhora
+        s, value = local_search(s, 1, False) # 1 = Melhor melhora
 
         if value < value_:
             s_ = s
